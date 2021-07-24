@@ -1,3 +1,4 @@
+<!--Static layout component-->
 <template>
   <div class="layout">
 

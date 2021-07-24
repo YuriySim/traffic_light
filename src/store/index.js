@@ -1,3 +1,5 @@
+//Module Vuex saves the state of "second" using createPersistedState plugin
+
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
