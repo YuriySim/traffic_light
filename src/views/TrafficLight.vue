@@ -70,24 +70,26 @@
         }
       },
 
-      //this function counts down seconds
-      //when "second = 0" it changes "route" (and color)
+      //this function countdowns seconds
+      //and saves state on every iteration (in case of page reload)
+      countdownSeconds() {
+        this.blinkColor()
+        this.second--
+        this.updateSecond(this.second) //saves state
+      },
+
+      //this function changes "route" (and color) when "second = 0"
       toggleColor() {
         this.blinkKey = true
         this.second = this.remSecond
 
         switch (this.color) {
           case 'Red':
+            this.routeKey = true;
             this.interval = setInterval(() => {
               if (this.second > 0) {
-                this.blinkColor()
-
-                this.second--
-
-                //saves state on every iteration in case of page reload:
-                this.updateSecond(this.second)
+                this.countdownSeconds()
               } else {
-                this.routeKey = true;
                 this.$router.push('/yellow')
               }
             }, 1000)
@@ -97,11 +99,7 @@
           case 'Yellow':
             this.interval = setInterval(() => {
               if (this.second > 0) {
-                this.blinkColor()
-
-                this.second--
-
-                this.updateSecond(this.second)
+                this.countdownSeconds()
               } else {
                 if(this.routeKey) {
                   this.$router.push('/green')
@@ -112,15 +110,11 @@
             break
 
           case 'Green':
+            this.routeKey = false;
             this.interval = setInterval(() => {
               if (this.second > 0) {
-                this.blinkColor()
-
-                this.second--
-
-                this.updateSecond(this.second)
+                this.countdownSeconds()
               } else {
-                this.routeKey = false;
                 this.$router.push('/yellow')
               }
             }, 1000)
